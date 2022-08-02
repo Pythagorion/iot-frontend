@@ -1,0 +1,70 @@
+<%- include('../partials/head') %>
+<!--  -->
+<%- include('../partials/header') %>
+
+
+  <main class="container">
+
+    <section style="margin-bottom: 5rem;">
+      <a href="/add" role="button">Add new lamp</a>
+    </section>
+    
+    <% if (!data.length) { %>
+
+      <article>
+        <h3>No data</h3>
+      </article>
+
+    <% } else { %>
+
+      <% data.forEach(e => { %>
+
+        <details>
+          <summary><%= e.streetname %></summary>
+
+            <% if (e.lamps.length > 0) { %>
+
+              <% let count = 0; %>
+              <% e.lamps.forEach(d => { %>
+
+                <% if (count === 0) { %>
+                  <div class="grid">
+                <% } %>
+
+                <article>
+                  <% if (d.status === "on") { %>
+                    <h3><mark><%= d.id %></mark></h3>
+                  <% } else { %>
+                    <h3><%= d.id %></h3>
+                  <% } %>
+ 
+                  <p>Status: <strong><%= (d.status) %></strong></p>
+
+                  <footer>
+                    <p>Brightness: <strong><%= d.brightness %></strong></p>
+                    <progress value=<%= String(d.brightness) %> max=<%= String(d.brightnessMax) %> ></progress>
+                  </footer>
+                </article>
+
+                <% count++; %>
+                <% if (count === 4) { %>
+                  </div>
+                  <% count = 0; %>
+                <% } %>
+                
+              <% }); %>
+            <% } else { %>
+              <article>
+                <h3>No Data</h3>
+              </article>
+            <% } %>
+
+        </details>
+
+      <% }); %>
+    <% } %>
+
+  </main>
+
+
+<%- include('../partials/footer') %>
